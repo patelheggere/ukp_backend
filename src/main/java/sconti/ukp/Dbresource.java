@@ -1810,13 +1810,13 @@ public class Dbresource extends Global {
 			// ResultSetHandler<RoadTransDataModel> resultHandler2 = new
 			// BeanHandler<RoadTransDataModel>(RoadTransDataModel.class);
 
-			String doorWindowRegEx = "[WD]\\d{1,2}";
-			String paintPointRegEx = "[P][LOA]\\d{1,2}";
+			String doorWindowRegEx = "[WR]\\d{1,2}";
+			String paintPointRegEx = "[P][OA]\\d{1,2}";
 			String cupboardRegEx = "[C][B]\\d{1,2}";
-			String chullaRegEx = "[C][H]\\d{1,2}";
-			String plasteringRegEx = "[P][L]\\d{1,2}";
+			String chullaRegEx = "[C][L]\\d{1,2}";
+			String plasteringRegEx = "[P][R]\\d{1,2}";
 
-			String wallRegEx = "[W][L]\\d{1,2}";
+			String wallRegEx = "[W][W]\\d{1,2}";
 			Map<String, List<String>> mainLabelsubLabelMap = new HashMap<String, List<String>>();
 			Map<String, Integer> mPositionsOfMainWallLabels = new HashMap<String, Integer>();
 
@@ -1986,10 +1986,10 @@ public class Dbresource extends Global {
 						//System.out.println(" paint:"+Pattern.matches(paintPointRegEx, fmElement.getSubLabel())+ " door "+Pattern.matches(doorWindowRegEx, fmElement.getSubLabel())+" Wall:"+Pattern.matches(wallRegEx, fmElement.getMainLabel()));
 						if (  (
 									!Pattern.matches(paintPointRegEx, fmElement.getSubLabel())  
-								&&  !Pattern.matches(doorWindowRegEx, fmElement.getSubLabel()) 
-								&&  !Pattern.matches(cupboardRegEx, fmElement.getSubLabel()) 
-								&&  !Pattern.matches(chullaRegEx, fmElement.getSubLabel()) 
-								&&  !Pattern.matches(wallRegEx, fmElement.getSubLabel())  ) 
+								&&  Pattern.matches(doorWindowRegEx, fmElement.getSubLabel()) 
+								&&  Pattern.matches(cupboardRegEx, fmElement.getSubLabel()) 
+								&&  Pattern.matches(chullaRegEx, fmElement.getSubLabel()) 
+								&&  Pattern.matches(wallRegEx, fmElement.getSubLabel())  ) 
 								&&  Pattern.matches(wallRegEx, fmElement.getMainLabel())) 
 						{		
 							FieldMeasurementsModel mainLabelData = null;
