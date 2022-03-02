@@ -60,7 +60,7 @@ public class UKPEndPoints {
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getIt(@HeaderParam("authorization") String token) {
 		System.out.println("Token:" + token);
-		return "Got it!";
+		return "Got dgfdgfg it!";
 	}
 	Impobj impobj = new Impobj();
 	@POST
