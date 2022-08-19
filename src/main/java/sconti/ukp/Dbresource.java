@@ -1,5 +1,10 @@
 package sconti.ukp;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.sql.BatchUpdateException;
 import java.sql.CallableStatement;
@@ -427,6 +432,47 @@ public class Dbresource extends Global {
 		}
 	}
 
+	public String healthcheckV2(String[] firstArg, String f ) {
+		//String[] stringArray = {firstArg, secondArg, thirdArg, fourthArg, fifthArg};
+		try {
+			File fil = new File(f);
+			String cd = firstArg[0]+" \""+fil.getPath()+"\"";
+			Process process = Runtime.getRuntime().exec(cd);
+			InputStream inputStream = process.getInputStream(); 
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+                log.error(line);
+            }
+            return line;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return e.getLocalizedMessage();
+		}
+		
+	}
+	
+	public String healthcheck(String[] firstArg ) {
+		//String[] stringArray = {firstArg, secondArg, thirdArg, fourthArg, fifthArg};
+		try {
+			Process process = Runtime.getRuntime().exec(firstArg);
+			InputStream inputStream = process.getInputStream(); 
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                System.out.println(line);
+            }
+            return line;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return e.getLocalizedMessage();
+		}
+		
+	}
+	
 	public APIResponseModel GetDistricts() {
 
 		APIResponseModel apiResponseModel = new APIResponseModel();

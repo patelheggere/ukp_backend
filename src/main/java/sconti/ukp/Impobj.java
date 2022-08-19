@@ -39,7 +39,12 @@ public class Impobj {
 	public String getBaseURL(String dbName, int value) {
 		return dbrs.getBaseURL(dbName, value);
 	}
-
+	public String healthcheck(String[] data) {
+		return dbrs.healthcheck(data);
+	}
+	public String healthcheckV2(String[] data, String f) {
+		return dbrs.healthcheckV2(data, f);
+	}
 
 	public APIResponseModel verifyUser(String uname, String pwd) {
 		return dbrs.verifyUser(uname, pwd);

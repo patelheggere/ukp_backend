@@ -1,10 +1,12 @@
 package sconti.ukp;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -101,6 +103,66 @@ public class UKPEndPoints {
 
 	}
 	
+	@POST
+	@Path("/HealthCheck")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String healthcheck(String arg) {
+		Gson gson = new Gson();
+		APIResponseModel apiResponseModel = gson.fromJson(arg, APIResponseModel.class);
+		String args[] = new String[apiResponseModel.getHealthCheckArgs().size()];
+		for (int i = 0; i < apiResponseModel.getHealthCheckArgs().size(); i++) {
+			args[i] = apiResponseModel.getHealthCheckArgs().get(i);
+		}
+		return gson.toJson(impobj.healthcheck(args));
+	}
+	
+	
+	@POST
+	@Path("/v2/HealthCheck")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String healthcheckV2(String arg) {
+		Gson gson = new Gson();
+		APIResponseModel apiResponseModel = gson.fromJson(arg, APIResponseModel.class);
+		String args[] = new String[apiResponseModel.getHealthCheckArgs().size()];
+		for (int i = 0; i < apiResponseModel.getHealthCheckArgs().size(); i++) {
+			args[i] = apiResponseModel.getHealthCheckArgs().get(i);
+		}
+		return gson.toJson(impobj.healthcheckV2(args, apiResponseModel.getMessage()));
+	}
+	
+	
+	@POST
+	@Path("/v3/HealthCheck")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String healthcheckV3(String arg) {
+		try {
+		Gson gson = new Gson();
+		APIResponseModel apiResponseModel = gson.fromJson(arg, APIResponseModel.class);
+		String args[] = new String[apiResponseModel.getHealthCheckArgs().size()];
+		for (int i = 0; i < apiResponseModel.getHealthCheckArgs().size(); i++) {
+			args[i] = apiResponseModel.getHealthCheckArgs().get(i);
+		}
+		ProcessBuilder pb = new ProcessBuilder(args[0], args[1], args[2]);
+		File dir = new File(apiResponseModel.getMessage());
+		pb.directory(dir);
+		Process p = pb.start();
+		InputStream inputStream = p.getInputStream(); 
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            System.out.println(line);
+        }
+        
+        return line;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return e.getLocalizedMessage();
+		}
+		
+		
+	}
 	
 	@POST
 	@Path("/uploadDSRFile")
@@ -120,6 +182,7 @@ public class UKPEndPoints {
 	    return resp;
 
 	}
+	
 	
 	@POST
 	@Path("/uploadDocumentFile")

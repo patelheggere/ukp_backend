@@ -45,6 +45,8 @@ import sconti.ukp.RateAbstractModel;
 		List<DocumentModel> mDocumentList;
 		List<LatestFMModel> mFieldMeasurementList;
 		List<GstValueModel> mGSTList;
+		List<String> healthCheckArgs;
+
 
 		
 		public List<LatestFMModel> getmLatestFMModel() {
@@ -502,6 +504,16 @@ import sconti.ukp.RateAbstractModel;
 
 		public void setmGSTList(List<GstValueModel> mGSTList) {
 			this.mGSTList = mGSTList;
+		}
+
+
+		public List<String> getHealthCheckArgs() {
+			return healthCheckArgs;
+		}
+
+
+		public void setHealthCheckArgs(List<String> healthCheckArgs) {
+			this.healthCheckArgs = healthCheckArgs;
 		}
 		
 		
