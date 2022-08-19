@@ -1,10 +1,12 @@
 package sconti.ukp;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -879,6 +881,34 @@ public class UKPEndPoints {
    		return new Gson().toJson(impobj.InsertFieldMeaurements(data));
    	}
     
+    
+    @POST
+   	@Path("/ExecuteFile")
+   	@Produces(MediaType.APPLICATION_JSON)
+   	public String ExecuteFile(String data) {
+    		DataModel dataModel = new DataModel();
+    		dataModel = new Gson().fromJson(data, DataModel.class);
+       	 ProcessBuilder pb = new ProcessBuilder(dataModel.getPath());
+
+         try {
+             Process p = pb.start();
+             StringBuilder str = new StringBuilder();
+             InputStreamReader isr = new InputStreamReader(p.getInputStream());
+             BufferedReader br = new BufferedReader(isr);
+             String line;
+             while ((line = br.readLine()) != null) {
+                 str.append(line + "\n");
+             }
+             int code = p.waitFor();
+             if (code == 0) {
+                 System.out.println(str);
+             } 
+             return str.toString();
+         } catch (Exception e) {
+             e.printStackTrace();
+             return null;
+         }
+   	}
     
     
     @POST
